@@ -33,9 +33,9 @@
 }
 
 @theme {
-  --font-sam: "Oswald", sans-serif;
-  --font-sam--font-feature-settings: "cv02", "cv03", "cv04", "cv11"; 
-  --font-sam--font-variation-settings: "opsz" 32;
+  --font-sam: 'Dancing Script', cursive;
+  --font-sophie: 'Marck Script', cursive;
+  --font-bella: 'Pacifico', cursive;
 }
 
 @media (prefers-color-scheme: dark) {
