@@ -117,3 +117,12 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* cursor animation */
+.typing-cursor span::after {
+  animation: hideCursor 0s 3s forwards;
+}
+
+@keyframes hideCursor {
+  to { opacity: 0; }
+}
