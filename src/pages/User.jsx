@@ -1,14 +1,16 @@
 import '../App.css'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { TypeAnimation } from 'react-type-animation';
 import { confetti } from '@tsparticles/confetti'
+import { tsParticles } from '@tsparticles/engine'
+import { loadFirePreset } from '@tsparticles/preset-fire'
 
 /**
  * Map to define different fonts for different users.
  */
 const users = {
-  "Sam": { 
+  "Sam": {
     "font": "font-sam",
     "particleList": ["🍾", "🎁"],
   },
@@ -63,11 +65,23 @@ function User() {
   const { name } = useParams();
   const font = users[name].font || 'font-sam';
 
+  // confetti particles
   useEffect(() => {
     setTimeout(shoot(name), 0);
     setTimeout(shoot(name), 100);
     setTimeout(shoot(name), 200);
   }, [name])
+
+  // fire particles
+  useEffect(() => {
+    loadFirePreset(tsParticles).then(() => {
+      tsParticles.load({
+        id: 'fire',
+        options: { preset: 'fire' }
+      })
+    })
+  }, [])
+
 
   return (
     <>
@@ -85,10 +99,26 @@ function User() {
         </span>
       </h1>
 
-      <Link to={`/presents/${name}`} className='text-xl text-gray-300'>
-        <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>
-          View Presents 🎁
-        </button>
+      {/* Fire Background */}
+      <div id="fire" style={{ width: '100%', height: '100%', position: 'fixed', top: 0, left: 0, zIndex: -1 }} />
+
+      <React.Fragment>
+        <div className='flex flex-col'>
+          <img src='/candle_fire.gif' alt='A fire' style={{ width: '100px', height: 'auto', transform: 'translateX(55px)' }} className='-mb-6' />
+          <img src='/candle.png' alt='A candle' style={{ width: '200px', height: 'auto' }} />
+        </div>
+      </React.Fragment>
+
+      {/* <div className='flex flex-wrap gap-3 p-5'>
+        {Array.from({ length: 22 }, (_, i) => (
+          <>
+          </>
+        ))}
+      </div> */}
+
+
+      <Link to={`/presents/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>
+        View Presents 🎁
       </Link>
     </>
   )
