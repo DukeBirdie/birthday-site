@@ -3,8 +3,6 @@ import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { TypeAnimation } from 'react-type-animation';
 import { confetti } from '@tsparticles/confetti'
-import { tsParticles } from '@tsparticles/engine'
-import { loadFirePreset } from '@tsparticles/preset-fire'
 
 /**
  * Map to define different fonts for different users.
@@ -72,17 +70,6 @@ function User() {
     setTimeout(shoot(name), 200);
   }, [name])
 
-  // fire particles
-  useEffect(() => {
-    loadFirePreset(tsParticles).then(() => {
-      tsParticles.load({
-        id: 'fire',
-        options: { preset: 'fire' }
-      })
-    })
-  }, [])
-
-
   return (
     <>
       {/* Do candles for age on this page -> blowing out animation */}
@@ -99,27 +86,23 @@ function User() {
         </span>
       </h1>
 
-      {/* Fire Background */}
-      <div id="fire" style={{ width: '100%', height: '100%', position: 'fixed', top: 0, left: 0, zIndex: -1 }} />
-
-      <React.Fragment>
-        <div className='flex flex-col'>
-          <img src='/candle_fire.gif' alt='A fire' style={{ width: '100px', height: 'auto', transform: 'translateX(55px)' }} className='-mb-6' />
-          <img src='/candle.png' alt='A candle' style={{ width: '200px', height: 'auto' }} />
-        </div>
-      </React.Fragment>
-
-      {/* <div className='flex flex-wrap gap-3 p-5'>
+      {/* 22 Candles? */}
+      <div className='flex flex-wrap'>
         {Array.from({ length: 22 }, (_, i) => (
-          <>
-          </>
+          <React.Fragment key={i}>
+            <div className='flex flex-col p-3'>
+              <img src='/candle_fire.gif' alt='A fire' style={{ width: '50px', height: 'auto', transform: 'translateX(28px)' }} className='-mb-3' />
+              <img src='/candle.png' alt='A candle' style={{ width: '100px', height: 'auto' }} />
+            </div>
+          </React.Fragment>
         ))}
-      </div> */}
+      </div>
 
-
-      <Link to={`/presents/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>
-        View Presents 🎁
-      </Link>
+      <div className='flex justify-center mt-4'>
+        <Link to={`/presents/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20'>
+          {name}'s Presents 🎁
+        </Link>
+      </div>
     </>
   )
 }
