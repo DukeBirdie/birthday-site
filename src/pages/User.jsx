@@ -1,5 +1,5 @@
 import '../App.css'
-import React, { useEffect } from 'react'
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { TypeAnimation } from 'react-type-animation';
 import { confetti } from '@tsparticles/confetti'
@@ -11,14 +11,17 @@ const users = {
   "Sam": {
     "font": "font-sam",
     "particleList": ["🍾", "🎁"],
+    "cupcake": "/sams_cupcake.png",
   },
   "Sophie": {
     "font": "font-sophie",
     "particleList": ["🎉", "🍾"],
+    "cupcake": "/cupcake.png",
   },
   "Bella": {
     "font": "font-bella",
-    "particleList": ["🍾", "🎊"]
+    "particleList": ["🍾", "🎊"],
+    "cupcake": "/bellas_cupcake.png",
   },
 };
 
@@ -62,14 +65,24 @@ function shoot(name) {
 function User() {
   const { name } = useParams();
   const font = users[name].font || 'font-sam';
+  const [blown, setBlown] = useState(false);
+  const [showWish, setShowWish] = useState(false);
+  const [wished, setWished] = useState(false);
 
-  // confetti particles
-  useEffect(() => {
-    setTimeout(shoot(name), 0);
-    setTimeout(shoot(name), 100);
-    setTimeout(shoot(name), 200);
-  }, [name])
-
+  // blow out animation
+  function blowOutFire() {
+    setBlown(true);
+    setTimeout(() => setShowWish(true));
+    // trigger confetti
+    setTimeout(() => shoot(name), 1300);
+    setTimeout(() => shoot(name), 1400);
+    setTimeout(() => shoot(name), 1500);
+  }
+  
+  function makeAWish() {
+    setWished(true);
+  }
+  
   return (
     <>
       {/* Do candles for age on this page -> blowing out animation */}
@@ -87,12 +100,42 @@ function User() {
       </h1>
 
       <div className='flex flex-col p-3 items-center'>
-        <img src='/candle_fire.gif' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
-        <img src='/candle_2.png' alt='A candle' style={{ width: '300px', height: 'auto' }} className='-mb-15' />
-        <img src='/cupcake.png' alt='A cupcake' style={{ width: '300px', height: 'auto' }} />
+        {/* Show candle fire if not blown out */}
+        {!blown ? (
+          <img src='/candle_fire.gif' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
+        ) : (
+          <img src='/fire_blown_out_plus_wind.gif' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
+        )}
+
+        <img src='/candle.gif' alt='A candle' style={{ width: '300px', height: 'auto' }} className='-mb-15' />
+        <img src={(name === "Sam") ? ( users[name].cupcake ) : name === "Sophie" ? ( users[name].cupcake ) : ( users[name].cupcake) } alt='A cupcake' style={{ width: '300px', height: 'auto' }} />
       </div>
+
+
+      {blown && !wished && showWish && (
+        <h1>Make a Wish!</h1> 
+      )}
+
+      {blown && !wished && (
+        <div className='flex justify-center mt-4'>
+          <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20' onClick={makeAWish}>I did!</button>
+        </div>
+      )}
       
-      {/* Blow out candle -> show smoke animation for 1 cycle -> at bottom show text: Hope 22 Treats you well (or something like that) */}
+      {/* Wish was made */}
+      {wished && (
+        <h1>Hope 22 Treats You Well {name}!</h1>
+      )}
+
+      {/* Blow out candle -> show smoke animation for 1 cycle -> at bottom show text: -> Make a Wish -> Hope 22 Treats you well (or something like that) */}
+
+      {!blown && (
+        <div className='flex justify-center mt-4'>
+          <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20' onClick={blowOutFire}>
+            Blow Out
+          </button>
+        </div>
+      )}
 
       <div className='flex justify-center mt-4'>
         <Link to={`/presents/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20'>
