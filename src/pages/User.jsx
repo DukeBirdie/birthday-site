@@ -68,21 +68,28 @@ function User() {
   const [blown, setBlown] = useState(false);
   const [showWish, setShowWish] = useState(false);
   const [wished, setWished] = useState(false);
+  const [newCandle, setNewCandle] = useState(false);
 
   // blow out animation
   function blowOutFire() {
     setBlown(true);
-    setTimeout(() => setShowWish(true));
+    
+    // show the show wish text
+    setTimeout(() => setShowWish(true), 2000);
+    
+    // trigger new candle
+    setTimeout(() => setNewCandle(true), 1300); 
+
     // trigger confetti
     setTimeout(() => shoot(name), 1300);
     setTimeout(() => shoot(name), 1400);
     setTimeout(() => shoot(name), 1500);
   }
-  
+
   function makeAWish() {
     setWished(true);
   }
-  
+
   return (
     <>
       {/* Do candles for age on this page -> blowing out animation */}
@@ -107,13 +114,17 @@ function User() {
           <img src='/fire_blown_out_plus_wind.gif' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
         )}
 
-        <img src='/candle.gif' alt='A candle' style={{ width: '300px', height: 'auto' }} className='-mb-15' />
-        <img src={(name === "Sam") ? ( users[name].cupcake ) : name === "Sophie" ? ( users[name].cupcake ) : ( users[name].cupcake) } alt='A cupcake' style={{ width: '300px', height: 'auto' }} />
+        {!newCandle ? (
+          <img src='/candle.gif' alt='A candle' style={{ width: '300px', height: 'auto' }} className='-mb-15' />
+        ) : (
+          <img src='/blown_out_candle.png' alt='A candle' style={{ width: '300px', height: 'auto' }} className='-mb-15' />
+        )}
+        <img src={(name === "Sam") ? (users[name].cupcake) : name === "Sophie" ? (users[name].cupcake) : (users[name].cupcake)} alt='A cupcake' style={{ width: '300px', height: 'auto' }} />
       </div>
 
 
       {blown && !wished && showWish && (
-        <h1>Make a Wish!</h1> 
+        <h1>Make a Wish!</h1>
       )}
 
       {blown && !wished && (
@@ -121,7 +132,7 @@ function User() {
           <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20' onClick={makeAWish}>I did!</button>
         </div>
       )}
-      
+
       {/* Wish was made */}
       {wished && (
         <h1>Hope 22 Treats You Well {name}!</h1>
