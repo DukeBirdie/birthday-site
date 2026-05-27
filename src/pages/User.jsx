@@ -86,17 +86,13 @@ function User() {
         </span>
       </h1>
 
-      {/* 22 Candles? */}
-      <div className='flex flex-wrap'>
-        {Array.from({ length: 22 }, (_, i) => (
-          <React.Fragment key={i}>
-            <div className='flex flex-col p-3'>
-              <img src='/candle_fire.gif' alt='A fire' style={{ width: '50px', height: 'auto', transform: 'translateX(28px)' }} className='-mb-3' />
-              <img src='/candle.png' alt='A candle' style={{ width: '100px', height: 'auto' }} />
-            </div>
-          </React.Fragment>
-        ))}
+      <div className='flex flex-col p-3 items-center'>
+        <img src='/candle_fire.gif' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
+        <img src='/candle_2.png' alt='A candle' style={{ width: '300px', height: 'auto' }} className='-mb-15' />
+        <img src='/cupcake.png' alt='A cupcake' style={{ width: '300px', height: 'auto' }} />
       </div>
+      
+      {/* Blow out candle -> show smoke animation for 1 cycle -> at bottom show text: Hope 22 Treats you well (or something like that) */}
 
       <div className='flex justify-center mt-4'>
         <Link to={`/presents/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20'>
