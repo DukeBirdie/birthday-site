@@ -75,7 +75,7 @@ function Graduation() {
                 <h1>Congrats on Graduating <span className={font}>{name}</span>!!!</h1>
             ) : (
                 <>
-                    <h1>Sorry for tricking you but...</h1>
+                    <h1>{(name === "Sam") ? ("Got you 🙃") : ("Sorry for tricking you but...")}</h1>
                 </>
             )}
 
@@ -88,7 +88,7 @@ function Graduation() {
             <div className='flex justify-center mt-50'>
                 {showChampagne && showGraduating && (
                     <Link to={`/presents/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20'>
-                        {name}'s Presents 🎁
+                        {name}'s Presents 🎁 (Fr this time)
                     </Link>
                 )}
             </div>
