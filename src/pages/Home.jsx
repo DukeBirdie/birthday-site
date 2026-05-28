@@ -9,14 +9,13 @@ function Home() {
       <section id="center">
         <ul className="list-none text-left text-3xl text-white">
           {names.map(name => (
-            <li className='transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110'>
-              <Link to={`/user/${name}`} key={name}>
+            <li key={name} className='transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110'>
+              <Link to={`/user/${name}`}>
                 {name}
               </Link>
             </li>
           ))}
         </ul>
-
       </section>
     </>
   )
