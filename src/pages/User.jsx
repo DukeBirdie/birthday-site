@@ -1,29 +1,10 @@
 import '../App.css'
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { TypeAnimation } from 'react-type-animation';
+import { TypeAnimation } from 'react-type-animation'
 import { confetti } from '@tsparticles/confetti'
+import { users } from '../data/UserData'
 
-/**
- * Map to define different fonts for different users.
- */
-const users = {
-  "Sam": {
-    "font": "font-sam",
-    "particleList": ["🍾", "🎁"],
-    "cupcake": "/sams_cupcake.png",
-  },
-  "Sophie": {
-    "font": "font-sophie",
-    "particleList": ["🎉", "🍾"],
-    "cupcake": "/cupcake.png",
-  },
-  "Bella": {
-    "font": "font-bella",
-    "particleList": ["🍾", "🎊"],
-    "cupcake": "/bellas_cupcake.png",
-  },
-};
 
 // source: https://confetti.js.org/
 const defaults = {
@@ -73,12 +54,14 @@ function User() {
   // blow out animation
   function blowOutFire() {
     setBlown(true);
-    
+
     // show the show wish text
+    // show 'I did' button -> allow animation to finish
     setTimeout(() => setShowWish(true), 2000);
-    
+
+
     // trigger new candle
-    setTimeout(() => setNewCandle(true), 1300); 
+    setTimeout(() => setNewCandle(true), 1300);
 
     // trigger confetti
     setTimeout(() => shoot(name), 1300);
@@ -127,9 +110,11 @@ function User() {
         <h1>Make a Wish!</h1>
       )}
 
-      {blown && !wished && (
+      {blown && showWish && !wished && (
         <div className='flex justify-center mt-4'>
-          <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20' onClick={makeAWish}>I did!</button>
+          <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20' onClick={makeAWish}>
+            I did!
+          </button>
         </div>
       )}
 
@@ -149,9 +134,11 @@ function User() {
       )}
 
       <div className='flex justify-center mt-4'>
-        <Link to={`/presents/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20'>
-          {name}'s Presents 🎁
-        </Link>
+        {blown && wished && (
+          <Link to={`/grad/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20'>
+            {name}'s Presents 🎁
+          </Link>
+        )}
       </div>
     </>
   )
