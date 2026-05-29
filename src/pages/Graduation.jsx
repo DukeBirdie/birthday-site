@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { TypeAnimation } from 'react-type-animation'
 import { confetti } from '@tsparticles/confetti'
 import { users } from '../data/UserData'
 
@@ -39,6 +40,7 @@ function Graduation() {
     const { name } = useParams();
     const font = users[name].font || 'font-sam';
     const [showGraduating, setShowGraduating] = useState(false);
+    const [showFinalMessage, setShowFinalMessage] = useState(false);
     const [triggerConfetti] = useState(false);
     const [showChampagne, setShowChampagne] = useState(false);
 
@@ -67,7 +69,15 @@ function Graduation() {
             const timer = setTimeout(() => setShowChampagne(true), 0);
             return () => clearTimeout(timer);
         }
-    })
+    }, [showGraduating, showChampagne])
+
+    // show final message
+    useEffect(() => {
+        if (showGraduating && showChampagne) {
+            const timer = setTimeout(() => setShowFinalMessage(true), 0);
+            return () => clearTimeout(timer);
+        }
+    }, [showGraduating, showChampagne, showFinalMessage]);
 
     return (
         <>
@@ -79,9 +89,19 @@ function Graduation() {
                 </>
             )}
 
+            {showGraduating && showChampagne && showFinalMessage && (
+                <TypeAnimation
+                    sequence={["Well... in a couple days."]}
+                    speed={20}
+                    cursor={true}
+                    repeat={0}
+                    className="typing-cursor"
+                />
+            )}
+
             <div className='flex flex-col items-center'>
                 {showChampagne && (
-                    <img src='/champagine_animated.gif' alt='A bottle of champagine exploding' style={{ width: '800px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
+                    <img src='/FULL_champagne.gif' alt='A bottle of champagine exploding' style={{ width: '800px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
                 )}
             </div>
 

@@ -94,7 +94,7 @@ function User() {
         {!blown ? (
           <img src='/candle_fire.gif' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
         ) : (
-          <img src='/fire_blown_out_new.gif' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
+          <img src='/fire_blown_out_1_loop.gif' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
         )}
 
         {!newCandle ? (
