@@ -80,7 +80,7 @@ function User() {
         Happy Birthday{' '}
         <span className={font}>
           <TypeAnimation
-            sequence={[(name === "Sam") ? "Samantha !🍾🎉" : name + " !🍾🎉", 1000]}
+            sequence={[(name === "Sam") ? "Samantha!" : name + "!", 1000]}
             speed={10}
             cursor={true}
             repeat={0}
@@ -120,7 +120,7 @@ function User() {
 
       {/* Wish was made */}
       {wished && (
-        <h1>Hope 22 Treats You Well {name}!</h1>
+        <h1 className='leading-normal'>Hope 22 Treats You Well {name}!</h1>
       )}
 
       {/* Blow out candle -> show smoke animation for 1 cycle -> at bottom show text: -> Make a Wish -> Hope 22 Treats you well (or something like that) */}

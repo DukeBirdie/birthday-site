@@ -82,10 +82,10 @@ function Graduation() {
     return (
         <>
             {showGraduating ? (
-                <h1>Congrats on Graduating <span className={font}>{name}</span>!!!</h1>
+                <h1 className='leading-normal'>Congrats on Graduating <span className={font}>{name}</span>!!!</h1>
             ) : (
                 <>
-                    <h1>{(name === "Sam") ? ("Got you 🙃") : ("Sorry for tricking you but...")}</h1>
+                    <h1 className='leading-normal'>{(name === "Sam") ? ("Got you 🙃") : ("Sorry for tricking you but...")}</h1>
                 </>
             )}
 
