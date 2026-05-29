@@ -46,6 +46,7 @@ function Graduation() {
   const [showQuestion, setShowQuestion] = useState(false);
   const [showDrink, setShowDrink] = useState(false);
   const [showHike, setShowHike] = useState(false);
+  const [msgFinished, setMsgFinished] = useState(false);
 
   // show congrats text
   useEffect(() => {
@@ -91,6 +92,13 @@ function Graduation() {
       return () => clearTimeout(timer);
     }
   }, [showGraduating, showChampagne, showFinalMessage, showQuestion, showDrink, showHike]);
+  
+  useEffect(() => {
+    if (showChampagne && showQuestion && showDrink && showHike) {
+      const timer = setTimeout(() => setMsgFinished(true), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showChampagne, showQuestion, showDrink, showHike, msgFinished]);
 
   return (
     <>
@@ -131,7 +139,7 @@ function Graduation() {
       </div>
 
       <div className='flex justify-center m-5'>
-        {showChampagne && showGraduating && (
+        {showChampagne && showGraduating && msgFinished && (
           <Link to={`/presents/${name}`} className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20'>
             {name}'s Presents 🎁 (Fr this time)
           </Link>

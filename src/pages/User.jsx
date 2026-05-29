@@ -60,6 +60,7 @@ function User() {
     setTimeout(() => setShowWish(true), 2000);
 
 
+
     // trigger new candle
     setTimeout(() => setNewCandle(true), 1300);
 
