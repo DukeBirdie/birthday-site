@@ -18,3 +18,34 @@ export const users = {
     "cupcake": "/bellas_cupcake.png",
   },
 };
+
+/** storyline for sam & meaning behind her present,
+* also how to get it
+*/
+export const sam = {
+  "chapter_1": {
+    "intro": "I don't know as much about you as I'd like to, so I decided to go for a present that I believed you'd be able to use in a future job.", // -> maybe remove this
+  }
+}
+
+/** storyline for sophie & meaning behind her present,
+* also how to get it
+*/
+export const sophie = {
+  "chapter_1": {
+    "intro": "We haven't talked since like 2019 camp but from instagram I know you want to be a teacher, so I hope you can use this present in that role.",
+  }
+}
+
+/** storyline for bella & meaning behind her present,
+* also how to get it
+*/
+export const bella = {
+  "chapter_1": {
+    "intro": "I've literally never met you Bella, I've heard a lot of stories though (all good). I'm not sure what you'd like or what you'd use so I decided to go quite general with my present to you, I hope you'll be able to use it regardless."
+  }
+}
+
+
+
+

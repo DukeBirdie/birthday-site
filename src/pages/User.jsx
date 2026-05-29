@@ -140,6 +140,10 @@ function User() {
           </Link>
         )}
       </div>
+      
+      <div className='translate-x-45 translate-y-45' style={{ color: '#16171c' }}>
+        Hidden Message &rarr; :) 
+      </div>
     </>
   )
 }
