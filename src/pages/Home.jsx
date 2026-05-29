@@ -1,6 +1,5 @@
 import '../App.css'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import { TypeAnimation } from 'react-type-animation'
 
 function Home() {
