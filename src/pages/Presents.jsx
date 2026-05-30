@@ -11,14 +11,11 @@ function Presents() {
   const [showPresent, setShowPresent] = useState(false);
   const [showGame, setShowGame] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false);
-  const [p1Hide, setP1Hide] = useState(false);
-  const [p2Hide, setP2Hide] = useState(false);
-  const [p3Hide, setP3Hide] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [clickedIndex, setClickedIndex] = useState(null);
   const [revealed, setRevealed] = useState(false);
   const [correctIndex] = useState(() => Math.floor(Math.random() * 3)); // randomly pick correct present
   const [clickedIndexes, setClickedIndexes] = useState([]); // track all clicked presents
+  const [wrongRevealed, setWrongRevealed] = useState([]);
 
   function handleClick(i) {
     if (clickedIndexes.includes(i)) return; // prevent clicking another present
@@ -26,6 +23,8 @@ function Presents() {
     if (i === correctIndex) {
       setTimeout(() => setRevealed(true), 2900);
       setGameCompleted(true);
+    } else {
+      setTimeout(() => setWrongRevealed(prev => [...prev, i]), 2900);
     }
   }
 
@@ -95,8 +94,10 @@ function Presents() {
                   key={i}
                   src={
                     clickedIndexes.includes(i) && i === correctIndex && revealed ? users[name].temp_revealed :
-                     clickedIndexes.includes(i) && i === correctIndex ? users[name].present_open : clickedIndexes.includes(i) ? users[name].present_wrong : hoveredIndex === i ? users[name].present_hover :
-                     users[name].present
+                    clickedIndexes.includes(i) && i !== correctIndex && wrongRevealed.includes(i) ? users[name].present_wrong :
+                    clickedIndexes.includes(i) ? users[name].present_open :
+                    hoveredIndex === i ? users[name].present_hover :
+                    users[name].present
                   }
                   alt='A present'
                   style={{ width: '200px', height: 'auto' }}
