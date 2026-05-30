@@ -9,8 +9,35 @@ function Presents() {
   const [initialMsg, setInitialMsg] = useState(false);
   const [secondMsg, setSecondMsg] = useState(false);
   const [showPresent, setShowPresent] = useState(false);
-  const [showCarousel, setShowCarosel] = useState(false);
+  const [showGame, setShowGame] = useState(false);
+  const [gameCompleted, setGameCompleted] = useState(false);
+  const [p1Hide, setP1Hide] = useState(false);
+  const [p2Hide, setP2Hide] = useState(false);
+  const [p3Hide, setP3Hide] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [clickedIndex, setClickedIndex] = useState(null);
+  const [revealed, setRevealed] = useState(false);
+  const [correctIndex] = useState(() => Math.floor(Math.random() * 3)); // randomly pick correct present
+  const [clickedIndexes, setClickedIndexes] = useState([]); // track all clicked presents
 
+  function handleClick(i) {
+    if (clickedIndexes.includes(i)) return; // prevent clicking another present
+    setClickedIndexes(prev => [...prev, i]);
+    if (i === correctIndex) {
+      setTimeout(() => setRevealed(true), 2900);
+      setGameCompleted(true);
+    }
+  }
+
+  function handleHover(index) {
+    // replace current image w/ hover image 
+    setHoveredIndex(index);
+  }
+
+  function handleUnHover() {
+    // replace hover image w/ still image
+    setHoveredIndex(null);
+  }
 
   // first message -> thinking about presents
   useEffect(() => {
@@ -30,17 +57,18 @@ function Presents() {
 
   useEffect(() => {
     if (secondMsg) {
+      const timer = setTimeout(() => setShowGame(true), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [secondMsg, showGame]);
+
+  useEffect(() => {
+    if (gameCompleted) {
       const timer = setTimeout(() => setShowPresent(true), 3000);
       return () => clearTimeout(timer);
     }
-  })
+  }, [gameCompleted, showPresent]);
 
-  useEffect(() => {
-    if (showPresent) {
-      const timer = setTimeout(() => setShowCarosel(true), 10000);
-      return () => clearTimeout(timer);
-    }
-  }, [showPresent, showCarousel])
 
 
   return (
@@ -56,69 +84,37 @@ function Presents() {
           <h2 className='text-left'>{(name === "Sam") ? sam["chapter_1"].mid : (name === "Sophie") ? sophie["chapter_1"].mid : bella["chapter_1"].mid}</h2>
         )}
 
-        {/* Replace with better present -> then animated present on click */}
-        <div className='m-10'>
-          {showPresent && (
-            <img src='/present_not_animated.png' alt='A fire' style={{ width: '200px', height: 'auto', transform: 'translateX(14px)' }} className='-mb-30' />
-          )}
-        </div>
-
-        {/* Carousel */}
-        {showCarousel && (
-          <>
-            <div id="default-carousel" class="relative w-full" data-carousel="slide">
-              {/* Carousel Wrapper */}
-              <div class="relative h-56 overflow-hidden rounded-base md:h-96">
-                {/* Item 1 */}
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-1.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
-                </div>
-                {/* Item 2 */}
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-2.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
-                </div>
-                {/* Item 3 */}
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-3.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
-                </div>
-                {/* Item 4 */}
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-4.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
-                </div>
-                {/* Item 5 */}
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-5.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
-                </div>
-              </div>
-              {/* Slider Indicators */}
-              <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                <button type="button" class="w-3 h-3 rounded-base" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-              </div>
-              {/* Slider Controls */}
-              <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                <span class="inline-flex items-center justify-center w-10 h-10 rounded-base bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                  <svg class="w-5 h-5 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7" /></svg>
-                  <span class="sr-only">Previous</span>
-                </span>
-              </button>
-              <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                <span class="inline-flex items-center justify-center w-10 h-10 rounded-base bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                  <svg class="w-5 h-5 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7" /></svg>
-                  <span class="sr-only">Next</span>
-                </span>
-              </button>
+        {/* Present Roulette Game */}
+        {showGame && (
+          <div>
+            <h2>Let's play a game. It's called Present Roulette.</h2>
+            <h3 className='text-white mb-10'>There are no consequences for losing though.</h3>
+            <div className='flex flex-row gap-10'>
+              {[0, 1, 2].map((i) => (
+                <img
+                  key={i}
+                  src={
+                    clickedIndexes.includes(i) && i === correctIndex && revealed ? users[name].temp_revealed :
+                     clickedIndexes.includes(i) && i === correctIndex ? users[name].present_open : clickedIndexes.includes(i) ? users[name].present_wrong : hoveredIndex === i ? users[name].present_hover :
+                     users[name].present
+                  }
+                  alt='A present'
+                  style={{ width: '200px', height: 'auto' }}
+                  onMouseEnter={() => handleHover(i)}
+                  onMouseLeave={handleUnHover}
+                  onTouchStart={() => handleHover(i)}
+                  onClick={() => handleClick(i)}
+                />
+              ))}
             </div>
-          </>
+
+          </div>
         )}
 
-        {showPresent && showCarousel && (
+        {showPresent && (
           <>
             {/* DEBUG - REPLACE W/ CORRECT LINK */}
-            <Link to={`/`} className='text-xl text-gray-300'>
+            <Link to={`/`} className='text-xl text-gray-300 mt-25'>
               <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>
                 Link To Present
               </button>
@@ -129,7 +125,7 @@ function Presents() {
           </>
         )}
 
-        {showPresent && showCarousel && (
+        {showPresent && (
           <>
             <Link to={`/`} className='text-xl text-gray-300'>
               <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>

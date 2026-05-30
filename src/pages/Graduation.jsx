@@ -44,8 +44,6 @@ function Graduation() {
   const [triggerConfetti] = useState(false);
   const [showChampagne, setShowChampagne] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
-  const [showDrink, setShowDrink] = useState(false);
-  const [showHike, setShowHike] = useState(false);
   const [msgFinished, setMsgFinished] = useState(false);
 
   // show congrats text
@@ -79,26 +77,24 @@ function Graduation() {
   useEffect(() => {
     if (showGraduating && showChampagne) {
       const question = setTimeout(() => setShowQuestion(true), 2000);
-      const drink = setTimeout(() => setShowDrink(true), 5000);
-      const hike = setTimeout(() => setShowHike(true), 8000);
-      return () => clearTimeout(question || drink || hike);
+      return () => clearTimeout(question);
     }
-  }, [showGraduating, showChampagne, showQuestion, showDrink, showHike]);
+  }, [showGraduating, showChampagne, showQuestion]);
 
   // show final message
   useEffect(() => {
-    if (showGraduating && showChampagne && showQuestion && showDrink && showHike) {
+    if (showGraduating && showChampagne && showQuestion) {
       const timer = setTimeout(() => setShowFinalMessage(true), 0);
       return () => clearTimeout(timer);
     }
-  }, [showGraduating, showChampagne, showFinalMessage, showQuestion, showDrink, showHike]);
-  
+  }, [showGraduating, showChampagne, showFinalMessage, showQuestion]);
+
   useEffect(() => {
-    if (showChampagne && showQuestion && showDrink && showHike) {
+    if (showChampagne && showQuestion) {
       const timer = setTimeout(() => setMsgFinished(true), 1000);
       return () => clearTimeout(timer);
     }
-  }, [showChampagne, showQuestion, showDrink, showHike, msgFinished]);
+  }, [showChampagne, showQuestion, msgFinished]);
 
   return (
     <>
@@ -129,12 +125,6 @@ function Graduation() {
       <div className='flex flex-col items-center'>
         {showQuestion && (name === "Sam") && (
           <h2>What are your plans after graduation?</h2>
-        )}
-        {showDrink && (name === "Sam") && (
-          <h2>If you're free maybe we can go get a drink.</h2>
-        )}
-        {showHike && (name === "Sam") && (
-          <h2>Or better yet... go on a hike 😇</h2>
         )}
       </div>
 
