@@ -88,7 +88,7 @@ function Presents() {
           <div>
             <h2>Let's play a game. It's called Present Roulette.</h2>
             <h3 className='text-white mb-10'>There are no consequences for losing though.</h3>
-            <div className='flex flex-row gap-10'>
+            <div className='flex flex-col md:flex-row gap-10 items-center'>
               {[0, 1, 2].map((i) => (
                 <img
                   key={i}
