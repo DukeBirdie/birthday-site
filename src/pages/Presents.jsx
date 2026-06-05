@@ -87,17 +87,18 @@ function Presents() {
         {showGame && (
           <div>
             <h2>Let's play a game. It's called Present Roulette.</h2>
-            <h3 className='text-white mb-10'>There are no consequences for losing though.</h3>
+            <h3 className='text-white'>There are no consequences for losing though.</h3>
+            <h6 className='text-gray-600 mb-10 mt-5'>You have to click on the presents.</h6>
             <div className='flex flex-col md:flex-row gap-10 items-center'>
               {[0, 1, 2].map((i) => (
                 <img
                   key={i}
                   src={
-                    clickedIndexes.includes(i) && i === correctIndex && revealed ? users[name].temp_revealed :
-                    clickedIndexes.includes(i) && i !== correctIndex && wrongRevealed.includes(i) ? users[name].present_wrong :
-                    clickedIndexes.includes(i) ? users[name].present_open :
-                    hoveredIndex === i ? users[name].present_hover :
-                    users[name].present
+                    clickedIndexes.includes(i) && i === correctIndex && revealed ? users[name].revealed :
+                      clickedIndexes.includes(i) && i !== correctIndex && wrongRevealed.includes(i) ? users[name].present_wrong :
+                        clickedIndexes.includes(i) ? users[name].present_open :
+                          hoveredIndex === i ? users[name].present_hover :
+                            users[name].present
                   }
                   alt='A present'
                   style={{ width: '200px', height: 'auto' }}
@@ -114,28 +115,31 @@ function Presents() {
 
         {showPresent && (
           <>
+
+            <h2 className='text-left'>{(name === "Sam") ? sam["chapter_1"].end : (name === "Sophie") ? sophie["chapter_1"].end : bella["chapter_1"].end}</h2>
+
             {/* DEBUG - REPLACE W/ CORRECT LINK */}
-            <Link to={`/`} className='text-xl text-gray-300 mt-25'>
-              <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>
-                Link To Present
-              </button>
-            </Link>
+            <a href={`${(name === "Sam" ? sam["chapter_1"].link : (name === "Sophie") ? sophie["chapter_1"].link : bella["chapter_1"].link)}`} target="_blank" rel="noreferrer">
+            <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>
+              Link To Present
+            </button>
+          </a>
 
-            <h2>It should be prepaid but if not shoot me a message!</h2>
+        <h2>Click on the button above to claim the present.<br />It should be prepaid but if not shoot me a message!</h2>
 
-          </>
+      </>
         )}
 
-        {showPresent && (
-          <>
-            <Link to={`/`} className='text-xl text-gray-300'>
-              <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>
-                Back to Menu
-              </button>
-            </Link>
-          </>
-        )}
-      </div>
+      {showPresent && (
+        <>
+          <Link to={`/`} className='text-xl text-gray-300'>
+            <button className='inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20'>
+              Back to Menu
+            </button>
+          </Link>
+        </>
+      )}
+    </div >
     </>
   );
 }
